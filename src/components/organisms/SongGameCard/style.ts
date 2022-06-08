@@ -8,8 +8,14 @@ export const Center = styled.div`
   align-items: center;
 `;
 
+export const Element = styled.div`
+  width: 150px;
+  height: 150px;
+  background: red;
+`;
+
 export const LeftChevronContainer = styled.div`
-  position: absolute;
+  position: fixed;
   height: 100vh;
   left: 0;
   top: 0;
@@ -19,7 +25,7 @@ export const LeftChevronContainer = styled.div`
 `;
 
 export const RightChevronContainer = styled.div`
-  position: absolute;
+  position: fixed;
   height: 100vh;
   right: 0;
   top: 0;
@@ -28,3 +34,10 @@ export const RightChevronContainer = styled.div`
   align-items: center;
 `;
 
+
+export const ImagesCarousel = styled.div`
+  margin-top: 15rem;
+  img {
+    border: 1px solid black;
+  }
+`

@@ -1,9 +1,9 @@
 import React from 'react';
-import SongGameCard from './components/organisms/SongGameCard';
+import Home from './pages/Home';
 
 function App() {
   return (
-    <SongGameCard />
+    <Home />
   );
 }
 

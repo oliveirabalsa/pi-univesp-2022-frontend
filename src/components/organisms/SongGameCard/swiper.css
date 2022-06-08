@@ -1,0 +1,11 @@
+  .swiper-button-next::after {
+    display: none;
+  }
+  .swiper-button-prev::after {
+    display: none;
+  }
+
+  .swiper-button-next, .swiper-button-prev {
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent; 
+  }

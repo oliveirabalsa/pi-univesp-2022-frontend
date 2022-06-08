@@ -2,9 +2,9 @@ import React from "react"
 import { StyledLetter } from "./style";
 
 
-const Letter: React.FC<{children: React.ReactNode}> = ({ children }) => {
+const Letter: React.FC<{children: React.ReactNode, color: string}> = ({ children, color }) => {
     return (
-        <StyledLetter>
+        <StyledLetter color={color}>
             { children }
         </StyledLetter>
     )
