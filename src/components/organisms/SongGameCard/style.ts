@@ -34,10 +34,14 @@ export const RightChevronContainer = styled.div`
   align-items: center;
 `;
 
-
 export const ImagesCarousel = styled.div`
-  margin-top: 15rem;
+  margin-top: 25rem;
+  display: flex;
+
+  flex-direction: column;
+  gap: 20px;
+  overflow: auto;
   img {
-    border: 1px solid black;
+    height: 100px;
   }
-`
+`;
