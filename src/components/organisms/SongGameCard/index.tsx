@@ -10,6 +10,11 @@ import {
   LeftChevronContainer,
   RightChevronContainer,
   ImagesCarousel,
+  ImagesContainer,
+  ButtonContainer,
+  ArrowLeft,
+  ArrowRight,
+  Play
 } from "./style";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
@@ -19,59 +24,43 @@ import { getCurrentColor, IColorProps } from "../../../helpers/getCurrentColor";
 import { CONSTANTS } from "../../../constants";
 import { http } from "../../../services/axios/http";
 
-const images = require.context("../../../assets", true);
+const images = require.context("../../../assets/images", true);
+const audios = require.context("../../../assets/audios", true);
 
+interface ILetterResponse{
+  letter: string;
+  firstObjectName: string;
+  secondObjectName: string;
+  thirdObjectName: string;
+}
+// eslint-disable-next-line react-hooks/rules-of-hooks
 const SongGameCard = () => {
-  const ALPHABET = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z",
-  ];
   const [currentColors, setCurrentColors] = useState<IColorProps>(
     getCurrentColor("A")
   );
   const [currentLetter, setCurrentLetter] = useState<string>("A");
   const [currentImages, setCurrentImages] = useState<string[]>([]);
-  const [letterResponse, setLetterResponse] = useState<any[]>([]);
-
+  const [currentImageName, setCurrentImageName] = useState<string>("");
+  const [apiResponse, setApiResponse] = useState<any>();
   useEffect(() => {
     (async function () {
-      const response = await http.get("song-game");
-      setLetterResponse(response.data);
-      const letterPayload = letterResponse.find(
-        (payload) => payload.letter === currentLetter
-      );
+      if(!apiResponse) {
+        const response = await http.get("song-game");
+        const letterResponse = response.data;
+        setApiResponse(letterResponse);
+      }
+      const letterPayload = apiResponse.find(
+        (payload: ILetterResponse) => payload.letter === currentLetter
+        );
       const images = [
         letterPayload.firstObjectName,
         letterPayload.secondObjectName,
         letterPayload.thirdObjectName,
       ].filter((image) => image);
       setCurrentImages(images);
+      setCurrentImageName(images[1]);    
     })();
-  }, [currentLetter, letterResponse]);
+  }, [apiResponse, currentLetter]);
 
   const handleColors = (index: number) => {
     const letter = getCurrentLetter(index);
@@ -81,14 +70,26 @@ const SongGameCard = () => {
   };
 
   const handleImagePositionRight = () => {
-      const newImages = [...currentImages]
-      const lastImage = newImages.pop();
-      newImages.unshift(lastImage || '')
-      console.log(newImages)
-      setCurrentImages(newImages)
-
+    const newImages = [...currentImages]
+    const lastImage = newImages.pop();
+    newImages.unshift(lastImage || '')
+    setCurrentImages(newImages)
+    setCurrentImageName(newImages[1]);  
+      
   };
-  const handleImagePositionLeft = () => {};
+
+  const handleImagePositionLeft = () => {
+    const newImages = [...currentImages]
+    const lastImage = newImages.shift();
+    newImages.push(lastImage || '')
+    setCurrentImages(newImages)
+    setCurrentImageName(newImages[1]);  
+  };
+
+  const handlePlaySong = () => {
+    const currentAudio: any = document.querySelector(`#${currentImageName}`)
+    currentAudio?.play();
+  }
 
   return (
     <SongGameBackground
@@ -108,7 +109,7 @@ const SongGameCard = () => {
         slidesPerView={1}
         onSlideChange={(e) => handleColors(e.realIndex)}
       >
-        {ALPHABET.map((letter, index) => (
+        {CONSTANTS.values.alphabet.map((letter, index) => (
           <SwiperSlide key={index}>
             <Center>
               <Letter
@@ -118,28 +119,31 @@ const SongGameCard = () => {
               </Letter>
 
               <ImagesCarousel>
-                <div>
+                <ImagesContainer>
                   {currentImages.map((image, index) => (
+                    <>
                     <img
                       key={index}
-                      src={images(`./${image}.svg`)}
+                      src={images(`./${image.charAt(0)}/${image}.png`)}
                       alt={image}
                       style={{
-                        transform: index === 1 ? "scale(1.5)" : "scale(1)",
+                        transform: index === 1 ? "scale(1.3)" : "scale(1)",
+                        marginTop: index === 1 ? "50px" : 0,
                       }}
                     />
+                    <audio style={{visibility: "hidden"}} src={audios(`./${image}.mp3`)} id={image} >
+                    <source src={audios(`./${image}.mp3`)} type="audio/mpeg" />
+                    </audio>
+                    </>
                   ))}
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
+                </ImagesContainer>
+                <ButtonContainer
+
                 >
-                  <button onClick={() => handleImagePositionLeft}>L</button>
-                  <button>Play</button>
-                  <button onClick={() => handleImagePositionRight()}>R</button>
-                </div>
+                  <ArrowLeft onClick={() => handleImagePositionLeft()}></ArrowLeft>
+                  <Play onClick={() => handlePlaySong()}></Play>
+                  <ArrowRight onClick={() => handleImagePositionRight()}></ArrowRight>
+                </ButtonContainer>
               </ImagesCarousel>
             </Center>
           </SwiperSlide>

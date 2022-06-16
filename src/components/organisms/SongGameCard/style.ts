@@ -1,11 +1,48 @@
 import styled from "styled-components";
+import arrowLeft from "../../../assets/images/arrow-carousel-left.png";
+import arrowRight from "../../../assets/images/arrow-carousel-right.png";
+import buttonPlay from "../../../assets/images/button-play.png";
 
 export const Center = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
+  margin-top: -20px;
   justify-content: center;
   align-items: center;
+`;
+
+export const ArrowLeft = styled.div`
+  width: 32px;
+  height: 32px;
+  background-image: url(${arrowLeft});
+`;
+
+export const ArrowRight = styled.div`
+  width: 32px;
+  height: 32px;
+  background-image: url(${arrowRight});
+`;
+
+export const Play = styled.div`
+  width: 64px;
+  height: 64px;
+  background-image: url(${buttonPlay});
+`;
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
+  margin: 0 auto;
+`;
+
+export const ImagesContainer = styled.div`
+  display: flex;
+  gap: 40px;
+  margin-inline: auto;
+  justify-content: space-around;
+  height: 220px;
+  width: 100%;
 `;
 
 export const Element = styled.div`
@@ -35,11 +72,11 @@ export const RightChevronContainer = styled.div`
 `;
 
 export const ImagesCarousel = styled.div`
-  margin-top: 25rem;
+  margin-top: 30rem;
   display: flex;
 
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
   overflow: auto;
   img {
     height: 100px;
