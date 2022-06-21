@@ -32,7 +32,7 @@ export const Play = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 85%;
+  width: 80%;
   margin: 0 auto;
 `;
 
@@ -41,7 +41,7 @@ export const ImagesContainer = styled.div`
   gap: 40px;
   margin-inline: auto;
   justify-content: space-around;
-  height: 220px;
+  height: 200px;
   width: 100%;
 `;
 
@@ -55,7 +55,7 @@ export const LeftChevronContainer = styled.div`
   position: fixed;
   height: 100vh;
   left: 0;
-  top: 0;
+  top: -20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,18 +65,17 @@ export const RightChevronContainer = styled.div`
   position: fixed;
   height: 100vh;
   right: 0;
-  top: 0;
+  top: -20px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 export const ImagesCarousel = styled.div`
-  margin-top: 30rem;
+  margin-top: 25rem;
   display: flex;
 
   flex-direction: column;
-  gap: 15px;
   overflow: auto;
   img {
     height: 100px;
