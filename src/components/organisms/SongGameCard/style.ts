@@ -74,9 +74,10 @@ export const RightChevronContainer = styled.div`
 export const ImagesCarousel = styled.div`
   margin-top: 25rem;
   display: flex;
+  margin-left: 5px;
 
   flex-direction: column;
-  overflow: auto;
+  overflow: hidden;
   img {
     height: 100px;
   }
