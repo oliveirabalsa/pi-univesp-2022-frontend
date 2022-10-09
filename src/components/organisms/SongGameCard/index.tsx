@@ -27,7 +27,7 @@ import { http } from "../../../services/axios/http";
 const images = require.context("../../../assets/images", true);
 const audios = require.context("../../../assets/audios", true);
 
-interface ILetterResponse{
+interface ILetterResponse {
   letter: string;
   firstObjectName: string;
   secondObjectName: string;
@@ -44,21 +44,21 @@ const SongGameCard = () => {
   const [apiResponse, setApiResponse] = useState<any>();
   useEffect(() => {
     (async function () {
-      if(!apiResponse) {
+      if (!apiResponse) {
         const response = await http.get("song-game");
         const letterResponse = response.data;
         setApiResponse(letterResponse);
       }
       const letterPayload = apiResponse.find(
         (payload: ILetterResponse) => payload.letter === currentLetter
-        );
+      );
       const images = [
         letterPayload.firstObjectName,
         letterPayload.secondObjectName,
         letterPayload.thirdObjectName,
       ].filter((image) => image);
       setCurrentImages(images);
-      setCurrentImageName(images[1]);    
+      setCurrentImageName(images[1]);
     })();
   }, [apiResponse, currentLetter]);
 
@@ -74,8 +74,8 @@ const SongGameCard = () => {
     const lastImage = newImages.pop();
     newImages.unshift(lastImage || '')
     setCurrentImages(newImages)
-    setCurrentImageName(newImages[1]);  
-      
+    setCurrentImageName(newImages[1]);
+
   };
 
   const handleImagePositionLeft = () => {
@@ -83,12 +83,19 @@ const SongGameCard = () => {
     const lastImage = newImages.shift();
     newImages.push(lastImage || '')
     setCurrentImages(newImages)
-    setCurrentImageName(newImages[1]);  
+    setCurrentImageName(newImages[1]);
   };
+
+  const handleIncreseLetterAmountHeard = async () => {
+    await http.post("song-game/increase-amount-heard", {
+      letter: currentLetter
+    });
+  }
 
   const handlePlaySong = () => {
     const currentAudio: any = document.querySelector(`#${currentImageName}`)
     currentAudio?.play();
+    handleIncreseLetterAmountHeard();
   }
 
   return (
@@ -122,18 +129,18 @@ const SongGameCard = () => {
                 <ImagesContainer>
                   {currentImages.map((image, index) => (
                     <>
-                    <img
-                      key={index}
-                      src={images(`./${image.charAt(0)}/${image}.png`)}
-                      alt={image}
-                      style={{
-                        transform: index === 1 ? "scale(1.3)" : "scale(1)",
-                        marginTop: index === 1 ? "50px" : 0,
-                      }}
-                    />
-                    <audio style={{visibility: "hidden"}} src={audios(`./${image}.mp3`)} id={image} >
-                    <source src={audios(`./${image}.mp3`)} type="audio/mpeg" />
-                    </audio>
+                      <img
+                        key={index}
+                        src={images(`./${image.charAt(0)}/${image}.png`)}
+                        alt={image}
+                        style={{
+                          transform: index === 1 ? "scale(1.3)" : "scale(1)",
+                          marginTop: index === 1 ? "50px" : 0,
+                        }}
+                      />
+                      <audio style={{ visibility: "hidden" }} src={audios(`./${image}.mp3`)} id={image} >
+                        <source src={audios(`./${image}.mp3`)} type="audio/mpeg" />
+                      </audio>
                     </>
                   ))}
                 </ImagesContainer>
