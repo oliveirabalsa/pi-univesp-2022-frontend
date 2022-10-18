@@ -29,7 +29,7 @@ function Metrics() {
                 demonstrando o conteúdo abordado e passado com o maior número de repetição para o caso de um reforço em letras com um menor uso.
             </p>
             <p>
-                O gráfico 3 apresenta a letra com o maior número de acesso, apresentando o foco do professor ou da criança, dependendo do ambiente de uso do app.
+                O gráfico 4 apresenta a letra com o maior número de acesso, apresentando o foco do professor ou da criança, dependendo do ambiente de uso do app.
                 Se como material suplementar podemos iterar o foco do professor na letra com maior dificuldade,
                 ou se o foco é livre, certamente enxergamos que a criança acessará as letras que ela mais gosta e se familiariza.
             </p>
